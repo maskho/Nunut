@@ -13,6 +13,7 @@ import {selectTravelTimeInfo} from '../utils/slices/navSlice';
 import tw from 'twrnc';
 import {Icon} from '@rneui/themed';
 import {ridersData} from '../data/riders';
+import styles from '../constants/styles';
 
 const RiderOptionsCard = () => {
   const navigation = useNavigation<any>();
@@ -64,15 +65,13 @@ const RiderOptionsCard = () => {
           </TouchableOpacity>
         )}
       />
-      <View style={tw`mt-auto border-t border-gray-200`}>
         <TouchableOpacity
           disabled={!selected}
-          style={tw`bg-black py-2 m-3 ${!selected ? 'bg-gray-300' : ''}`}>
-          <Text style={tw`text-center text-white text-xl`}>
-            Pilih {selected?.title}
+          style={[tw`mt-auto bg-yellow-500 mx-5 py-2 mb-4 ${!selected ? 'hidden' : ''}`, styles.shadow]}>
+          <Text style={tw`text-center text-xl`}>
+            Chat {selected?.title}
           </Text>
         </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };

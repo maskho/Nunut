@@ -13,6 +13,7 @@ import {supabase} from '../utils/supabase';
 import tw from 'twrnc';
 import {Input} from '@rneui/base';
 import Avatar from '../components/Avatar';
+import styles from '../constants/styles';
 
 interface Props {
   session: Session;
@@ -93,74 +94,85 @@ const SettingsScreen: React.FC<Props> = ({session}) => {
   }
 
   return (
-    <ScrollView style={tw`bg-white`}>
-      <SafeAreaView style={tw`h-full`}>
-        <View
-          style={[tw`flex-1 items-center justify-center p-8 w-full max-w-sm`]}>
-          <View>
-            <Avatar
-              size={200}
-              url={avatarUrl}
-              onUpload={(url: string) => {
-                setAvatarUrl(url);
-                updateProfile({username, fullname, avatar_url: url});
-              }}
-            />
-          </View>
-          <View style={tw`pt-4 self-stretch mt-2`}>
-            <Input label="Email" value={session?.user?.email} disabled />
-          </View>
-          <View style={tw`pt-4 self-stretch`}>
-            <Input
-              label="Nama Pengguna (Username)"
-              value={username || ''}
-              onChangeText={text => setUsername(text)}
-            />
-          </View>
-          <View style={tw`pt-4 self-stretch`}>
-            <Input
-              label="Nama Lengkap (Sesuai Identitas)"
-              value={fullname || ''}
-              onChangeText={text => setFullname(text)}
-            />
-          </View>
-
-          <View style={tw`pt-4 self-stretch`}>
-            <TouchableOpacity
-              onPress={() =>
-                updateProfile({username, fullname, avatar_url: avatarUrl})
-              }
-              disabled={loading}
-              style={tw`h-12 bg-black rounded-md flex flex-row justify-center items-center px-6 ${
-                loading ? 'bg-gray-300' : ''
-              }`}>
-              <Text style={tw`text-center text-white text-xl`}>
-                {loading ? 'Memuat ...' : 'Perbarui'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={tw`pt-4 self-stretch`}>
-            <TouchableOpacity
-              onPress={() => navigation.dispatch(CommonActions.goBack())}
-              style={tw`h-12 bg-black rounded-md flex flex-row justify-center items-center px-6 ${
-                loading ? 'bg-gray-300' : ''
-              }`}>
-              <Text style={tw`text-center text-white text-xl`}>Hubungi CS</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={tw`pt-4 self-stretch`}>
-            <TouchableOpacity
-              onPress={() => supabase.auth.signOut()}
-              style={tw`h-12 bg-red-700 rounded-md flex flex-row justify-center items-center px-6 ${
-                loading ? 'bg-gray-300' : ''
-              }`}>
-              <Text style={tw`text-center text-white text-xl`}>Keluar</Text>
-            </TouchableOpacity>
-          </View>
+    // <ScrollView style={tw`bg-white`}>
+    <SafeAreaView style={tw`h-full`}>
+      <View
+        style={[tw`flex-1 items-center justify-center p-8 w-full max-w-sm`]}>
+        <View>
+          <Avatar
+            size={200}
+            url={avatarUrl}
+            onUpload={(url: string) => {
+              setAvatarUrl(url);
+              updateProfile({username, fullname, avatar_url: url});
+            }}
+          />
         </View>
-      </SafeAreaView>
-    </ScrollView>
+        <View style={tw`pt-4 self-stretch mt-2`}>
+          <Input label="Email" value={session?.user?.email} disabled />
+        </View>
+        <View style={tw`pt-4 self-stretch`}>
+          <Input
+            label="Nama Pengguna (Username)"
+            value={username || ''}
+            onChangeText={text => setUsername(text)}
+          />
+        </View>
+        <View style={tw`pt-4 self-stretch`}>
+          <Input
+            label="Nama Lengkap (Sesuai Identitas)"
+            value={fullname || ''}
+            onChangeText={text => setFullname(text)}
+          />
+        </View>
+
+        <View style={tw`pt-4 self-stretch`}>
+          <TouchableOpacity
+            onPress={() =>
+              updateProfile({username, fullname, avatar_url: avatarUrl})
+            }
+            disabled={loading}
+            style={[
+              tw`h-12 bg-yellow-500 rounded-md flex flex-row justify-center items-center border-2 px-6 ${
+                loading ? 'bg-gray-300' : ''
+              }`,
+              styles.shadow,
+            ]}>
+            <Text style={tw`text-center text-xl`}>
+              {loading ? 'Memuat ...' : 'Perbarui'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={tw`pt-4 self-stretch`}>
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(CommonActions.goBack())}
+            style={[
+              tw`h-12 bg-lime-500 rounded-md flex flex-row justify-center items-center border-2 px-6 ${
+                loading ? 'bg-gray-300' : ''
+              }`,
+              styles.shadow,
+            ]}>
+            <Text style={tw`text-center text-xl`}>Hubungi CS</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={tw`pt-4 self-stretch`}>
+          <TouchableOpacity
+            onPress={() => supabase.auth.signOut()}
+            style={[
+              tw`h-12 bg-red-500 rounded-md flex flex-row justify-center items-center border-2 px-6 ${
+                loading ? 'bg-gray-300' : ''
+              }`,
+              styles.shadow,
+            ]}>
+            <Text style={tw`text-center text-xl`}>Keluar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
   );
+  {
+    /* </ScrollView> */
+  }
 };
 
 export default SettingsScreen;

@@ -101,13 +101,13 @@ const Avatar: React.FC<Props> = ({url, size = 150, onUpload}) => {
         <Image
           source={{uri: avatarUrl}}
           accessibilityLabel="Avatar"
-          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 max-w-full`]}
+          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 border-4 max-w-full bg-amber-100`]}
         />
       ) : (
         <Image
           source={require('./../assets/images/default-pp.jpeg')}
           accessibilityLabel="Avatar"
-          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 max-w-full`]}
+          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 border-4 max-w-full bg-amber-100`]}
         />
       )}
       <View>

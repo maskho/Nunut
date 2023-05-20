@@ -7,7 +7,7 @@ export const favoritesData = [
   },
   {
     id: 'fav-2',
-    icon: 'work',
+    icon: 'briefcase',
     location: 'Kantor',
     destination: '?',
   },

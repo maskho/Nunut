@@ -6,39 +6,51 @@ import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
 import tw from 'twrnc';
 import {servicesData} from '../data/services';
+import styles from '../constants/styles';
 
 const ServiceOptions = () => {
   const navigation = useNavigation<any>();
   const origin = useSelector(selectOrigin);
 
   return (
-    <FlatList
-      data={servicesData}
-      horizontal
-      keyExtractor={item => item.id}
-      renderItem={({item}) => {
-        return (
-          <TouchableOpacity
-            onPress={() => navigation.navigate(item.screen)}
-            style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2 w-40`}
-            disabled={!origin}>
-            <View style={tw`${!origin ? 'opacity-20' : ''}`}>
-              <Image
-                style={{width: 100, height: 100, resizeMode: 'contain'}}
-                source={{uri: item.image}}
-              />
-              <Text style={tw`mt-2 text-base font-semibold`}>{item.title}</Text>
-              <Icon
-                style={tw`p-2 bg-black rounded-full w-10 mt-4`}
-                type="ionicons"
-                name="arrow-forward"
-                color="white"
-              />
-            </View>
-          </TouchableOpacity>
-        );
-      }}
-    />
+    <>
+      <View style={tw`flex flex-row flex-wrap justify-between mt-4`}>
+        <TouchableOpacity
+          style={[
+            tw`flex flex-col justify-center rounded-md border-2 bg-yellow-500 p-2.5 items-center mr-2`,
+            styles.shadow,
+          ]}>
+          <Icon name="map-pin" type="feather" color="black" size={24} />
+          <Text style={tw` text-lg font-bold ml-2`}>Nebeng</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            tw`flex-1 flex-row justify-center rounded-md border-2 bg-lime-500 p-2.5 items-center`,
+            styles.shadow,
+          ]}>
+          <Icon name="map" type="feather" color="black" size={24} />
+          <Text style={tw` text-lg font-bold ml-2`}>Beri tumpangan</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={tw`flex flex-row flex-wrap justify-between mt-2`}>
+        <TouchableOpacity
+          style={[
+            tw`flex-1 flex-row justify-center rounded-md border-2 bg-fuchsia-500 p-2.5 items-center mr-2`,
+            styles.shadow,
+          ]}>
+          <Icon name="package" type="feather" color="black" size={24} />
+          <Text style={tw` text-lg font-bold ml-2`}>Titipin barang</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            tw`flex-col justify-center rounded-md border-2 bg-cyan-500 p-2.5 items-center w-1/3`,
+            styles.shadow,
+          ]}>
+          <Icon name="star" type="feather" color="black" size={24} />
+          <Text style={tw` text-lg font-bold ml-2`}>Favorit</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 

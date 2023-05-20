@@ -7,13 +7,15 @@ import {
   Animated,
   processColor,
   StyleSheet,
+  TextInput,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {supabase} from '../utils/supabase';
 import {SafeAreaView} from 'react-native';
 import tw from 'twrnc';
-import {Input} from '@rneui/themed';
+import {Icon, Input} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+import styles from '../constants/styles';
 
 const AuthScreen = () => {
   const [email, setEmail] = useState('');
@@ -42,24 +44,8 @@ const AuthScreen = () => {
     setLoading(false);
   }
 
-  //   const animatedValue = useRef(new Animated.Value(0)).current;
-
-  //   useEffect(() => {
-  //     Animated.timing(animatedValue, {
-  //       toValue: 1,
-  //       duration: 2000,
-  //       useNativeDriver: false,
-  //     }).start();
-  //   }, [animatedValue]);
-
-  //   const backgroundColor =
-  //     animatedValue.interpolate({
-  //       inputRange: [0, 1],
-  //       outputRange: ['#FFA500', '#FFFF00'],
-  //     }) || processColor('#FFA500');
-
   return (
-    <SafeAreaView style={tw`h-full bg-black`}>
+    <SafeAreaView style={tw`h-full bg-amber-100`}>
       <View
         style={[tw`flex-1 items-center justify-center p-8 w-full max-w-sm`]}>
         <View style={tw`flex flex-col items-center`}>
@@ -69,60 +55,63 @@ const AuthScreen = () => {
               height: 200,
               resizeMode: 'contain',
             }}
-            source={require('./../assets/images/nunut-white.png')}
+            source={require('./../assets/images/nunut-black.png')}
           />
         </View>
-        <View style={tw`mb-4 w-full bg-white rounded-md h-12 px-6 text-black`}>
-          <Input
-            leftIcon={{type: 'ionicons', name: 'mail-outline'}}
-            onChangeText={text => setEmail(text)}
-            value={email}
+        <View
+          style={tw`flex flex-row mb-4 w-full bg-gray-50 rounded-md border-2 h-12 px-6 items-center`}>
+          <Icon name="mail" type="feather" size={24} color="#9CA3AF" />
+          <TextInput
+            style={tw`text-lg text-gray-800 ml-2 pb-2 h-full`}
             placeholder="Email"
-            autoCapitalize={'none'}
+            placeholderTextColor="#9CA3AF"
+            value={email}
+            onChangeText={text => setEmail(text)}
+            autoCapitalize='none'
           />
         </View>
-        <View style={tw`mb-8 w-full bg-white rounded-md h-12 px-6 text-black`}>
-          <Input
-            leftIcon={{type: 'ionicons', name: 'lock-outline'}}
-            onChangeText={text => setPassword(text)}
-            value={password}
-            secureTextEntry={true}
+        <View
+          style={tw`flex flex-row mb-4 w-full bg-gray-50 rounded-md border-2 h-12 px-6 items-center`}>
+          <Icon name="lock" type="feather" size={24} color="#9CA3AF" />
+          <TextInput
+            style={tw`text-lg text-gray-800 ml-2 pb-2 h-full`}
             placeholder="Password"
-            autoCapitalize={'none'}
+            placeholderTextColor="#9CA3AF"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry={true}
           />
         </View>
-        <View style={tw`mt-20 pt-4 pb-4 self-stretch`}>
+
+        <View style={tw`mt-4 pt-4 pb-4 self-stretch`}>
           <TouchableOpacity
             onPress={() => signInWithEmail()}
             disabled={loading}
-            style={tw`h-12 border-2 border-white rounded-md flex flex-row justify-center items-center px-6 ${
-              loading ? 'bg-gray-300' : ''
-            }`}>
-            <Text style={tw`text-center text-white text-xl`}>Masuk</Text>
+            style={[
+              tw`h-12 border-2 rounded-md flex flex-row justify-center items-center px-6 bg-yellow-500 ${
+                loading ? 'bg-gray-300' : ''
+              }`,
+              styles.shadow,
+            ]}>
+            <Text style={tw`text-center text-xl`}>Masuk</Text>
           </TouchableOpacity>
         </View>
         <View style={tw`pt-4 pb-4 self-stretch`}>
           <TouchableOpacity
             disabled={loading}
             onPress={() => signUpWithEmail()}
-            style={tw`h-12 border-2 border-white rounded-md flex flex-row justify-center items-center px-6 ${
-              loading ? 'bg-gray-300' : ''
-            }`}>
-            <Text style={tw`text-center text-white text-xl`}>Daftar</Text>
+            style={[
+              tw`h-12 border-2 rounded-md flex flex-row justify-center items-center px-6 bg-green-500 ${
+                loading ? 'bg-gray-300' : ''
+              }`,
+              styles.shadow,
+            ]}>
+            <Text style={tw`text-center text-xl`}>Daftar</Text>
           </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  gradient: {
-    flex: 1,
-  },
-});
 
 export default AuthScreen;

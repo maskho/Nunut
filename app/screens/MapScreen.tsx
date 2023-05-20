@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
@@ -7,6 +7,7 @@ import {Icon} from '@rneui/themed';
 import Map from '../components/Map';
 import DestinationCard from '../components/DestinationCard';
 import RiderOptionsCard from '../components/RiderOptionsCard';
+import styles from '../constants/styles';
 
 const MapScreen = () => {
   const Stack = createNativeStackNavigator();
@@ -14,15 +15,10 @@ const MapScreen = () => {
 
   return (
     <View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('SettingsScreen')}
-        style={tw`bg-gray-100 absolute z-50 p-3 rounded-full shadow-lg top-15 right-8`}>
-        <Icon name="menu" />
-      </TouchableOpacity>
-      <View style={tw`h-1/2`}>
+      <View style={tw`h-3/5`}>
         <Map />
       </View>
-      <View style={tw`h-1/2`}>
+      <View style={tw`h-2/5 border-t-4`}>
         <Stack.Navigator>
           <Stack.Screen
             name="DestinationCard"

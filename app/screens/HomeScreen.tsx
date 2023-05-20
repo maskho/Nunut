@@ -10,68 +10,105 @@ import {GOOGLE_MAPS_APIKEY} from '@env';
 import {setDestination, setOrigin} from '../utils/slices/navSlice';
 import ServiceOptions from '../components/ServiceOptions';
 import NavFavorites from '../components/NavFavorites';
+import styles from '../constants/styles';
+import {CircularProgressBase} from 'react-native-circular-progress-indicator';
+
+const props = {
+  activeStrokeWidth: 25,
+  inActiveStrokeWidth: 25,
+  inActiveStrokeOpacity: 0.2,
+};
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
 
   return (
-    <SafeAreaView style={tw`bg-white h-full`}>
+    <SafeAreaView style={tw`bg-amber-100 h-full`}>
       <View style={tw`p-5`}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SettingsScreen')}
-          style={tw`bg-gray-100 absolute z-50 p-3 rounded-full shadow-lg top-13 right-8`}>
-          <Icon name="menu" />
-        </TouchableOpacity>
-        <Image
-          style={{
-            width: 100,
-            height: 100,
-            resizeMode: 'contain',
-          }}
-          source={require('./../assets/images/nunut-black.png')}
-        />
-        <GooglePlacesAutocomplete
-          placeholder="Dari mana anda?"
-          nearbyPlacesAPI="GooglePlacesSearch"
-          debounce={400}
-          query={{
-            key: GOOGLE_MAPS_APIKEY,
-            language: 'id',
-          }}
-          GooglePlacesDetailsQuery={{fields: 'geometry'}}
-          fetchDetails={true}
-          onPress={(data, details = null) => {
-            dispatch(
-              setOrigin({
-                location: details?.geometry?.location,
-                description: data.description,
-              }),
-            );
+        <View style={tw`flex-row justify-between my-4 items-center z-10`}>
+          <GooglePlacesAutocomplete
+            placeholder="Pagi! Hari ini nunut kemana?"
+            nearbyPlacesAPI="GooglePlacesSearch"
+            debounce={400}
+            query={{
+              key: GOOGLE_MAPS_APIKEY,
+              language: 'id',
+            }}
+            GooglePlacesDetailsQuery={{fields: 'geometry'}}
+            fetchDetails={true}
+            onPress={(data, details = null) => {
+              dispatch(
+                setDestination({
+                  location: details?.geometry?.location,
+                  description: data.description,
+                }),
+              );
 
-            dispatch(setDestination(null));
-          }}
-          enablePoweredByContainer={true}
-          minLength={3}
-          styles={{
-            container: {
-              flex: 0,
-            },
-            textInput: {
-              fontSize: 18,
-            },
-          }}
-        />
-        <ServiceOptions />
-        <NavFavorites />
-        <View style={tw`pt-4 mt-auto self-stretch`}>
+              dispatch(setOrigin(null));
+            }}
+            enablePoweredByContainer={false}
+            minLength={3}
+            styles={{
+              container: {
+                flex: 0,
+                backgroundColor: 'white',
+                borderWidth: 2,
+                borderRadius: 6,
+                width: '75%',
+                position: 'relative',
+              },
+              listView: {
+                position: 'absolute',
+                top: 60,
+                width: '135%',
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: 'white',
+              },
+              textInput: {
+                fontSize: 18,
+              },
+            }}
+          />
           <TouchableOpacity
-            style={tw`h-12 bg-black rounded-md flex flex-row justify-center items-center px-6`}>
-            <Text style={tw`text-center text-white text-xl`}>
-              Beri tumpangan
-            </Text>
+            onPress={() => navigation.navigate('SettingsScreen')}
+            style={[tw`rounded-md`, styles.shadow]}>
+            <Icon
+              name="menu"
+              type="feather"
+              style={tw`p-3 bg-yellow-500 rounded-md w-15 border-2`}
+            />
           </TouchableOpacity>
         </View>
+
+        <View style={tw`items-center bg-white border-4 p-8 rounded-lg`}>
+          <CircularProgressBase
+            {...props}
+            value={80}
+            radius={125}
+            activeStrokeColor={'#e84118'}
+            inActiveStrokeColor={'#e84118'}>
+            <CircularProgressBase
+              {...props}
+              value={87}
+              radius={100}
+              activeStrokeColor={'#badc58'}
+              inActiveStrokeColor={'#badc58'}>
+              <CircularProgressBase
+                {...props}
+                value={62}
+                radius={75}
+                activeStrokeColor={'#18dcff'}
+                inActiveStrokeColor={'#18dcff'}
+              />
+            </CircularProgressBase>
+          </CircularProgressBase>
+        </View>
+
+        <ServiceOptions />
+        {/* <NavFavorites /> */}
+        <View style={tw`pt-4 mt-auto self-stretch`}></View>
       </View>
     </SafeAreaView>
   );
