@@ -1,6 +1,8 @@
 Nunut ![Build Status](https://github.com/HabitRPG/habitica/workflows/Test/badge.svg) [![Code Climate](https://codeclimate.com/github/HabitRPG/habitrpg.svg)](https://codeclimate.com/github/nunut) [![BuruBounty](https://api.bountysource.com/badge/tracker?tracker_id=68393)](https://www.bountysource.com/trackers/68393-habitrpg?utm_source=68393&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 ===============
 
+## (We are building Nunut Open Source Community!)  
+
 [Nunut](https://nunut.kobar.co) is a new and innovative ride-sharing (nebeng) platform that has the potential as a soft power tool to drive behavioral change among users, increasing their awareness of climate change and encouraging more sustainable transportation habits. The app should always be easy to use and affordable, offering features that make it a more sustainable and safe way to get around.
 
 **We need more developers!** Your assistance will be greatly appreciated. The wiki pages below and the additional pages they link to will tell you how to get started on contributing code and where you can go to seek further help or ask questions:
