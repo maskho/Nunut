@@ -11,10 +11,11 @@ import DocumentPicker, {
 interface Props {
   size: number;
   url: string | null;
+  styles?: string;
   onUpload: (filePath: string) => void;
 }
 
-const Avatar: React.FC<Props> = ({url, size = 150, onUpload}) => {
+const Avatar: React.FC<Props> = ({url, size = 150, styles = '', onUpload}) => {
   const [uploading, setUploading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const avatarSize = {height: size, width: size};
@@ -101,13 +102,13 @@ const Avatar: React.FC<Props> = ({url, size = 150, onUpload}) => {
         <Image
           source={{uri: avatarUrl}}
           accessibilityLabel="Avatar"
-          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 border-4 max-w-full bg-amber-100`]}
+          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 border-4 max-w-full bg-amber-100 ${styles}`]}
         />
       ) : (
         <Image
           source={require('./../assets/images/default-pp.jpeg')}
           accessibilityLabel="Avatar"
-          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 border-4 max-w-full bg-amber-100`]}
+          style={[avatarSize, tw`rounded-full overflow-hidden pt-0 border-4 max-w-full bg-amber-100 ${styles}`]}
         />
       )}
       <View>

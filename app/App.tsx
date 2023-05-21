@@ -4,7 +4,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
 import {supabase} from './utils/supabase';
 import {Session} from '@supabase/supabase-js';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {store} from './utils/store';
@@ -19,6 +23,7 @@ import HistoryScreen from './screens/HistoryScreen';
 import tw from 'twrnc';
 import ChatBoxScreen from './screens/ChatBoxScreen';
 import CreateChatScreen from './screens/CreateChatScreen';
+import ChatScreen from './screens/ChatScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,7 +36,9 @@ const HomeStack = ({session}: {session: Session}) => {
         component={HomeScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="SettingsScreen" options={{headerShown: false}}>
+      <Stack.Screen
+        name="SettingsScreen"
+        options={{headerShown: true, headerTitle: 'Pengaturan', headerStyle:tw`bg-yellow-300`}}>
         {() => <SettingsScreen key={session.user.id} session={session} />}
       </Stack.Screen>
     </Stack.Navigator>
@@ -48,6 +55,8 @@ const ChatStack = () => {
         options={{
           headerShown: true,
           headerTitle: 'Kotak Pesan',
+          headerTitleAlign: 'left',
+          headerStyle: tw`bg-yellow-300`,
           headerRight: () => (
             <View style={tw`flex flex-row`}>
               <Icon
@@ -58,7 +67,7 @@ const ChatStack = () => {
                 style={tw`mr-4`}
               />
               <Icon
-              onPress={() => navigation.navigate('CreateChatScreen')}
+                onPress={() => navigation.navigate('CreateChatScreen')}
                 name="edit"
                 type="feather"
                 color="black"
@@ -73,6 +82,11 @@ const ChatStack = () => {
         name="CreateChatScreen"
         component={CreateChatScreen}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{headerShown: true, headerTitle: 'Pesan'}}
       />
     </Stack.Navigator>
   );
@@ -100,14 +114,14 @@ function App(): JSX.Element {
             keyboardVerticalOffset={Platform.OS === 'ios' ? -64 : 0}>
             {session && session.user ? (
               <Tab.Navigator
-                // tabBar={(props) => <CustomTabBar {...props} />}
                 screenOptions={{
                   tabBarStyle: {
-                    backgroundColor: 'yellow',
+                    backgroundColor: 'rgb(253 224 71)',
                     paddingTop: 8,
                     borderTopWidth: 2,
                     borderTopColor: 'black',
                   },
+                  unmountOnBlur: true,
                 }}>
                 <Tab.Screen
                   name="HomeStack"
@@ -177,7 +191,20 @@ function App(): JSX.Element {
                 <Tab.Screen
                   name="ChatStack"
                   component={ChatStack}
-                  options={{
+                  options={({route}) => ({
+                    tabBarStyle: (route => {
+                      const routeName =
+                        getFocusedRouteNameFromRoute(route) ?? '';
+                      if (routeName === 'ChatScreen') {
+                        return {display: 'none'};
+                      }
+                      return {
+                        backgroundColor: 'rgb(253 224 71)',
+                        paddingTop: 8,
+                        borderTopWidth: 2,
+                        borderTopColor: 'black',
+                      };
+                    })(route),
                     headerShown: false,
                     tabBarLabel: '',
                     tabBarIcon: ({color, size}) => (
@@ -188,7 +215,7 @@ function App(): JSX.Element {
                         size={24}
                       />
                     ),
-                  }}
+                  })}
                 />
               </Tab.Navigator>
             ) : (

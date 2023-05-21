@@ -16,8 +16,10 @@ const CreateChatScreen = ({navigation}: any) => {
   return (
     <SafeAreaView>
       <Input
-      leftIcon={<Icon name='message-circle' type='feather' color='black' size={24} />}
-        placeholder="Enter a chat name"
+        leftIcon={
+          <Icon name="message-circle" type="feather" color="black" size={24} />
+        }
+        placeholder="Cari kotak pesan"
         value={input}
         onChangeText={text => setInput(text)}
         onSubmitEditing={() => {}}

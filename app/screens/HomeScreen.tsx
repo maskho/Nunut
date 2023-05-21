@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
+import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native';
@@ -11,20 +11,49 @@ import {setDestination, setOrigin} from '../utils/slices/navSlice';
 import ServiceOptions from '../components/ServiceOptions';
 import NavFavorites from '../components/NavFavorites';
 import styles from '../constants/styles';
-import {CircularProgressBase} from 'react-native-circular-progress-indicator';
+import CircularProgress, {CircularProgressBase} from 'react-native-circular-progress-indicator';
+import ComingSoonModal from '../components/ComingSoonModal';
 
 const props = {
   activeStrokeWidth: 25,
-  inActiveStrokeWidth: 25,
+  inActiveStrokeWidth: 22,
   inActiveStrokeOpacity: 0.2,
 };
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const getCurrentWeekDate = () => {
+    const currentDate = new Date();
+
+    const currentDayOfWeek = currentDate.getDay();
+
+    // Calculate the date of the first day of the week by subtracting the difference from the current date
+    const firstDayOfWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - currentDayOfWeek);
+
+    const sunday =  firstDayOfWeek.toLocaleDateString('id-ID', { month: 'long', day: 'numeric' });
+  // };
+
+    const dayOfWeek = currentDate.toLocaleDateString('id-ID', {
+      month: 'long', day: 'numeric', year: 'numeric'
+    });
+
+    return `${sunday} - ${dayOfWeek}`;
+  };
 
   return (
     <SafeAreaView style={tw`bg-amber-100 h-full`}>
+      <ScrollView>
       <View style={tw`p-5`}>
         <View style={tw`flex-row justify-between my-4 items-center z-10`}>
           <GooglePlacesAutocomplete
@@ -82,7 +111,11 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={tw`items-center bg-white border-4 p-8 rounded-lg`}>
+        <View style={tw`items-center bg-emerald-200 border-4 p-2 rounded-lg`}>
+          <Text style={tw`text-2xl font-bold`}>Tingkat Emisi Karbonmu</Text>
+          <Text style={tw`text-lg font-semibold mb-4`}>
+            {getCurrentWeekDate()}
+          </Text>
           <CircularProgressBase
             {...props}
             value={80}
@@ -95,21 +128,27 @@ const HomeScreen = () => {
               radius={100}
               activeStrokeColor={'#badc58'}
               inActiveStrokeColor={'#badc58'}>
-              <CircularProgressBase
+              <CircularProgress
                 {...props}
-                value={62}
+                value={27}
                 radius={75}
-                activeStrokeColor={'#18dcff'}
-                inActiveStrokeColor={'#18dcff'}
+                title='KgCO2e'
+                titleFontSize={16}
+                activeStrokeColor={'rgb(15 118 110)'}
+                inActiveStrokeColor={'rgb(20 184 166)'}
               />
             </CircularProgressBase>
           </CircularProgressBase>
+          <Icon name="edit-3" type="feather" style={tw`text-6xl mt-4`} />
         </View>
 
-        <ServiceOptions />
-        {/* <NavFavorites /> */}
+        <ServiceOptions openModal={openModal} />
         <View style={tw`pt-4 mt-auto self-stretch`}></View>
       </View>
+      <ComingSoonModal
+        isModalVisible={isModalVisible}
+        closeModal={closeModal}
+      /></ScrollView>
     </SafeAreaView>
   );
 };
