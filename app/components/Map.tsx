@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Platform} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -44,7 +44,7 @@ const Map = () => {
     <MapView
       ref={mapRef}
       style={tw`flex-1`}
-      mapType="mutedStandard"
+      mapType={Platform.OS == 'android' ? 'standard' : 'mutedStandard'}
       initialRegion={{
         latitude: -7.764415922344856,
         longitude: 110.38311808061593,

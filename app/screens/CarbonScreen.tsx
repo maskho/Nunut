@@ -52,10 +52,16 @@ const CarbonScreen = () => {
                 {getCurrentWeekDateRange()}
               </Text>
               <CircularProgress
-                value={60}
+                value={150}
+                maxValue={150}
+                duration={5000}
+                strokeColorConfig={[
+                  {color: '#a3e635', value: 20},
+                  {color: '#84cc16', value: 70},
+                  {color: 'red', value: 150}]}
                 radius={120}
                 progressValueColor={'#ecf0f1'}
-                activeStrokeColor={'rgb(163 230 53)'}
+                activeStrokeColor={'#adf538'}
                 inActiveStrokeColor={'rgb(217 249 157)'}
                 inActiveStrokeOpacity={0.5}
                 inActiveStrokeWidth={20}
