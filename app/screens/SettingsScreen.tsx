@@ -140,6 +140,14 @@ const SettingsScreen: React.FC<Props> = ({session}) => {
           </View>
 
           <View style={tw`pt-4 self-stretch`}>
+            <Input
+              label="NIK Dummy (Sesuai Identitas)"
+              value={'3506110909090009'}
+              // onChangeText={text => setFullname(text)}
+            />
+          </View>
+
+          <View style={tw`pt-4 self-stretch`}>
             <TouchableOpacity
               onPress={() =>
                 updateProfile({username, fullname, avatar_url: avatarUrl})

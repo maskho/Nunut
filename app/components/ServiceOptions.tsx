@@ -41,7 +41,7 @@ const ServiceOptions = ({openModal}:any) => {
           <Text style={tw` text-lg font-bold ml-2`}>Titipin barang</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={openModal}
+          onPress={openModal}
           style={[
             tw`flex-col justify-center rounded-md border-2 bg-cyan-500 p-2.5 items-center w-1/3`,
             styles.shadow,
@@ -52,6 +52,7 @@ const ServiceOptions = ({openModal}:any) => {
       </View>
       <View style={tw`flex flex-row flex-wrap justify-between mt-4`}>
         <TouchableOpacity
+          onPress={openModal}
           style={[
             tw`flex flex-col justify-center rounded-md border-2 bg-blue-500 p-2.5 items-center mr-2`,
             styles.shadow,
@@ -60,11 +61,17 @@ const ServiceOptions = ({openModal}:any) => {
           <Text style={tw` text-lg font-bold ml-2`}>Sewa</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={openModal}
           style={[
             tw`flex-1 flex-row justify-center rounded-md border-2 bg-emerald-500 p-2.5 items-center`,
             styles.shadow,
           ]}>
-          <Icon name="electric-bike" type="materialicons" color="black" size={32} />
+          <Icon
+            name="electric-bike"
+            type="materialicons"
+            color="black"
+            size={32}
+          />
           <Text style={tw` text-lg font-bold ml-2`}>Port Sepeda Listrik</Text>
         </TouchableOpacity>
       </View>
